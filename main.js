@@ -39,7 +39,6 @@ const START_TOAST_OUT_MS = 260;
 
 // extra pause days (YYYY-MM-DD) - will SNAP too
 const EXTRA_PAUSE_DATES = [
-  "2025-12-22",
 ];
 
 const svg = d3.select("#chart")
