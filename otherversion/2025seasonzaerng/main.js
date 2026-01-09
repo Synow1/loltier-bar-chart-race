@@ -13,7 +13,7 @@ const innerH = HEIGHT - margin.top - margin.bottom;
 const TOP_N = 15;
 
 // total play time for moving parts (pauses add on top)
-const DURATION = 45000;
+const DURATION = 90000;
 
 const SMOOTH_Y = 0.10;     // rank movement smoothing
 const SMOOTH_AXIS = 0.12;  // axis zoom smoothing
