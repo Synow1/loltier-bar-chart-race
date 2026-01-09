@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LoL Rank Race</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@latest/dist/web/static/pretendard.css" />
+
+  <style>
+    :root{
+      --bg:#0b0f19;
+      --fg:rgba(255,255,255,0.92);
+      --muted:rgba(255,255,255,0.62);
+      --grid:rgba(255,255,255,0.10);
+      --card:rgba(255,255,255,0.08);
+      --card-border:rgba(255,255,255,0.14);
+      --font:Pretendard, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+    html,body{margin:0;padding:0;background:var(--bg);height:100%;overflow:hidden;}
+    svg{display:block;}
+
+    /* bottom-left HUD (button + scrubber) */
+    .hud{
+      position: fixed;
+      left: 18px;
+      bottom: 18px;
+      z-index: 50;
+      display:flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+      user-select:none;
+    }
+    .play-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      color: var(--fg);
+      cursor:pointer;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      transition: transform .06s ease, background .12s ease;
+      font: 15px var(--font);
+    }
+    .play-btn:hover{ background: rgba(255,255,255,0.12); }
+    .play-btn:active{ transform: translateY(1px); }
+
+    .icon{
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display:grid;
+      place-items:center;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.14);
+      font-size: 16px;
+      line-height: 0;
+    }
+    .label{display:flex;flex-direction:column;gap:2px;}
+    .label .main{font-weight:650;letter-spacing:0.2px;}
+    .label .sub{font-size:12px;color:var(--muted);}
+
+    /* small timeline scrubber */
+    .scrub-wrap{
+      width: 280px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+    }
+    #scrubber{
+      width: 100%;
+      appearance: none;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.18);
+      outline: none;
+    }
+    #scrubber::-webkit-slider-thumb{
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.92);
+      border: 2px solid rgba(0,0,0,0.25);
+      cursor: pointer;
+    }
+    #scrubber::-moz-range-thumb{
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.92);
+      border: 2px solid rgba(0,0,0,0.25);
+      cursor: pointer;
+    }
+
+    /* SVG styles */
+    .grid line{ stroke: var(--grid); shape-rendering: crispEdges; }
+    .tick text{
+      fill: var(--muted);
+      font: 18px var(--font);
+    }
+
+    .name{
+      fill: rgba(0,0,0,0.90);
+      font: 26px var(--font);
+    }
+    .valueText{
+      fill: rgba(255,255,255,0.86);
+      font: 22px var(--font);
+    }
+
+    .dateHud{
+      fill: rgba(255,255,255,0.92);
+      font: 120px var(--font);
+    }
+  </style>
+</head>
+<body>
+  <div class="hud">
+    <button id="playBtn" class="play-btn" type="button">
+      <span class="icon" id="playIcon">▶</span>
+      <span class="label">
+        <span class="main" id="playText">Play</span>
+        <span class="sub" id="playSub">Start animation</span>
+      </span>
+    </button>
+
+    <div class="scrub-wrap">
+      <input id="scrubber" type="range" min="0" max="1" step="0.0001" value="0" />
+    </div>
+  </div>
+
+  <svg id="chart"></svg>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="./main.js"></script>
+</body>
+</html>
